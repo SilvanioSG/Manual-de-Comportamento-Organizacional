@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Manual de Comportamento Organizacional - Silvanio Gois</title>
+    <style>
+        /* --- VARIÁVEIS DE COR E ESTILO --- */
+        :root {
+            --primary: rgb(39, 98, 141);
+            --primary-light: rgb(59, 128, 181);
+            --primary-dark: rgb(25, 65, 95);
+            --bg-body: #f0f4f8;
+            --bg-card: #ffffff;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --accent: #25D366;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --shadow-hover: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.02);
+            --radius: 8px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 20px;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- CABEÇALHO (HEADER) --- */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 5%;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .profile-area {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .foto-gestor {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.8);
+            object-fit: cover;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .foto-gestor:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border-color: white;
+        }
+
+        .profile-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        .profile-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .header-contact { text-align: right; }
+        .header-contact h2 {
+            font-size: 1rem;
+            font-weight: 400;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-whatsapp {
+            background-color: var(--accent);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            font-size: 0.9rem;
+        }
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* --- LAYOUT PRINCIPAL (GRID) --- */
+        .main-wrapper {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+            flex: 1;
+        }
+
+        /* --- MENU LATERAL (SIDEBAR) --- */
+        aside {
+            position: sticky;
+            top: 140px;
+            height: calc(100vh - 180px);
+            overflow-y: auto;
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            border-top: 4px solid var(--primary);
+            transition: box-shadow 0.3s ease;
+        }
+        aside:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        aside h3 {
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links { list-style: none; }
+        .nav-links li { margin-bottom: 10px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+            position: relative;
+        }
+        .nav-links a:hover {
+            background: rgba(39, 98, 141, 0.05);
+            color: var(--primary);
+            border-left-color: var(--primary);
+            transform: translateX(3px);
+        }
+        .nav-links a.active {
+            background: rgba(39, 98, 141, 0.08);
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        /* --- CONTEÚDO DO MANUAL --- */
+        .content-area {
+            background: var(--bg-card);
+            padding: 50px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            transition: box-shadow 0.3s ease;
+        }
+        .content-area:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .capa-manual {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .capa-manual h1 {
+            color: var(--primary-dark);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .capa-manual p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .target-audience {
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        section {
+            margin-bottom: 60px;
+            scroll-margin-top: 20px;
+        }
+        
+        .chapter-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            border-bottom: 2px solid rgba(39, 98, 141, 0.2);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.2s ease;
+        }
+        .chapter-title span {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        .chapter-title:hover span {
+            transform: rotate(3deg) scale(1.05);
+            background: var(--primary-light);
+        }
+
+        p { margin-bottom: 20px; text-align: justify; }
+
+        /* --- BOXES ADICIONAIS --- */
+        .insight-box {
+            background: #eef2ff;
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+        .insight-box:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            background: #e8edff;
+        }
+        .reflection-prompt {
+            background: #fef9e3;
+            border-left: 4px solid #f5b042;
+            padding: 16px 20px;
+            margin: 30px 0 10px;
+            border-radius: var(--radius);
+            font-style: italic;
+            color: #7c5e1a;
+            transition: all 0.3s ease;
+        }
+        .reflection-prompt:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+            background: #fff6db;
+        }
+        .reflection-prompt strong {
+            font-style: normal;
+        }
+
+        /* --- TABELAS --- */
+        .table-responsive { overflow-x: auto; margin: 30px 0; border-radius: var(--radius); box-shadow: var(--shadow-sm); }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th { background: var(--primary); color: white; padding: 15px; text-align: left; font-weight: 600; }
+        td { padding: 15px; border-bottom: 1px solid #e2e8f0; font-size: 0.95rem; transition: all 0.2s ease; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td {
+            background-color: #f1f5f9;
+            transform: scale(1.001);
+        }
+
+        /* --- CHECKLIST INTERATIVO --- */
+        .checklist-box {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: var(--radius);
+            border: 1px solid #e2e8f0;
+            border-left: 6px solid var(--primary);
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        .checklist-box:hover {
+            box-shadow: var(--shadow-md);
+            border-left-width: 8px;
+        }
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            cursor: pointer;
+            border-bottom: 1px dashed #cbd5e1;
+            transition: all 0.2s ease;
+        }
+        .check-item:last-child { border-bottom: none; }
+        .check-item:hover {
+            color: var(--primary-dark);
+            padding-left: 8px;
+            background: rgba(39, 98, 141, 0.03);
+        }
+        input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: var(--primary);
+            transition: transform 0.1s ease;
+        }
+        input[type="checkbox"]:hover {
+            transform: scale(1.1);
+        }
+        .completed { text-decoration: line-through; opacity: 0.6; }
+
+        /* --- GLOSSÁRIO --- */
+        .glossary {
+            background: #f1f5f9;
+            padding: 25px 30px;
+            border-radius: var(--radius);
+            margin: 40px 0 20px;
+            transition: all 0.3s ease;
+        }
+        .glossary:hover {
+            background: #eef2f6;
+            box-shadow: var(--shadow-sm);
+        }
+        .glossary h3 {
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        .glossary dl {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 12px 20px;
+        }
+        .glossary dt {
+            font-weight: bold;
+            color: var(--primary);
+            transition: color 0.2s;
+        }
+        .glossary dt:hover {
+            color: var(--primary-light);
+        }
+        .glossary dd {
+            color: var(--text-main);
+        }
+
+        /* --- BOTÃO VOLTAR AO TOPO --- */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* --- RODAPÉ --- */
+        footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: auto;
+        }
+        .footer-tagline {
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        .footer-note {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 15px auto 0;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 15px;
+        }
+        .footer-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .footer-link:hover {
+            background: white;
+            color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .copyright { margin-top: 25px; font-size: 0.8rem; opacity: 0.7; }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 992px) {
+            .main-wrapper { grid-template-columns: 1fr; }
+            aside { position: static; height: auto; margin-bottom: 30px; top: auto; }
+        }
+
+        @media (max-width: 768px) {
+            header { position: relative; }
+            html { scroll-padding-top: 10px; }
+            .header-container { flex-direction: column; text-align: center; }
+            .profile-area { flex-direction: column; }
+            .header-contact { text-align: center; }
+            .content-area { padding: 30px 20px; }
+            .capa-manual h1 { font-size: 2rem; }
+            .back-to-top { width: 44px; height: 44px; font-size: 1.3rem; bottom: 20px; right: 15px; }
+            .glossary dl { grid-template-columns: 1fr; gap: 8px; }
+            .glossary dt { margin-top: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="profile-area">
+                <img src="Executivo_Silvanio_Gestor.PNG" alt="Silvanio Gois" class="foto-gestor" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'85\' height=\'85\' viewBox=\'0 0 24 24\' fill=\'white\'><path d=\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\'/></svg>'; this.style.backgroundColor='rgba(255,255,255,0.2)';">
+                <div class="profile-text">
+                    <h1>Guia para gestão de pessoas e equipes</h1>
+                    <p>Silvanio Gois</p>
+                </div>
+            </div>
+            <div class="header-contact">
+                <h2>Gestão estratégica</h2>
+                <a href="https://wa.me/5513988301094" target="_blank" class="btn-whatsapp">
+                    Contato
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-wrapper">
+        
+        <aside>
+            <h3>Índice do Manual</h3>
+            <ul class="nav-links">
+                <li><a href="#intro">Introdução Estratégica</a></li>
+                <li><a href="#cap1">1. Psicologia na Gestão</a></li>
+                <li><a href="#cap2">2. Liderança e Poder</a></li>
+                <li><a href="#cap3">3. Equipes de Alta Performance</a></li>
+                <li><a href="#cap4">4. Estratégias de Motivação</a></li>
+                <li><a href="#cap5">5. Clima e Estresse</a></li>
+                <li><a href="#anexo1">Anexo A: Checklist Operacional</a></li>
+                <li><a href="#anexo2">Anexo B: Plano de Ação</a></li>
+            </ul>
+        </aside>
+
+        <main class="content-area">
+            
+            <div class="capa-manual" id="intro">
+                <h1>Manual de Comportamento Organizacional</h1>
+                <p>Guia definitivo para gestores: conectando processos, alinhando pessoas e alavancando resultados através de técnicas cientificamente comprovadas.</p>
+                <div class="target-audience">
+                    👥 Este manual foi pensado para gestores que querem aliar resultados a pessoas – da liderança técnica à gestão de clima e motivação.
+                </div>
+                <div class="insight-box" style="margin-top: 25px; text-align: left;">
+                    <p> <strong>Aqui você não vai encontrar apenas teoria.</strong> Cada seção foi pensada para responder àquelas perguntas que surgem na segunda‑feira de manhã: <em>como alinhar expectativas com um colaborador talentoso mas desmotivado? Como lidar com um conflito silencioso que está minando o clima da equipe? Como tomar decisões mais justas quando os números não contam toda a história?</em></p>
+                </div>
+            </div>
+
+            <section id="cap1">
+                <h2 class="chapter-title"><span>1</span> Fundamentos da Psicologia Aplicada</h2>
+                <p>A psicologia nas organizações não busca apenas interpretar o indivíduo de forma clínica, mas compreender profundamente o <strong>comportamento humano e os processos mentais</strong> que influenciam a produtividade e a convivência no ambiente de trabalho.</p>
+                <p>Para o gestor moderno, o autoconhecimento e a inteligência emocional são as ferramentas primárias. Antes de gerir o outro, é necessário gerir a si mesmo, mantendo a imparcialidade nas decisões e a escuta ativa para lidar com diferentes personalidades.</p>
+                <div class="insight-box">
+                    <strong> Três perguntas que você, como gestor, pode fazer a si mesmo semanalmente:</strong><br>
+                    1. Eu estou reagindo a essa situação ou respondendo de forma consciente?<br>
+                    2. Minha comunicação com a equipe tem sido clara ou eu tenho presumido que entenderam?<br>
+                    3. O que eu fiz esta semana para entender melhor as motivações individuais da minha equipe?
+                </div>
+                <div class="reflection-prompt">
+                    <strong>🔍 E agora, na prática?</strong> Escolha um dos três questionamentos acima e coloque em ação nesta semana. Observe como sua equipe responde.
+                </div>
+            </section>
+
+            <section id="cap2">
+                <h2 class="chapter-title"><span>2</span> Liderança vs. Uso Estratégico do Poder</h2>
+                <p>É comum confundir os conceitos de poder e liderança, mas suas aplicações geram resultados completamente distintos no engajamento da equipe:</p>
+                <p><strong>O Poder</strong> se sustenta na <em>dependência</em>. Você utiliza a hierarquia ou recursos para coagir ou direcionar pessoas a um objetivo. Embora necessário para a governança institucional (Poder Legítimo), seu uso excessivo gera conformidade, não comprometimento.</p>
+                <p><strong>A Liderança</strong> se sustenta na <em>compatibilidade de valores</em>. É a habilidade de influenciar e inspirar pessoas para trabalharem com entusiasmo visando um bem comum.</p>
+                <div class="insight-box">
+                    <strong> Combinando poder e liderança:</strong> Um gestor maduro sabe que pode usar o poder que o cargo lhe dá — mas o faz com critério. Por exemplo: usar o poder para proteger a equipe de demandas externas inconsistentes, ou para garantir recursos que viabilizem um projeto importante. A diferença está no <em>para que</em> se usa o poder: se é para controlar ou para criar condições de sucesso.
+                </div>
+                <div class="reflection-prompt">
+                    <strong>🔍 E agora, na prática?</strong> Nesta semana, identifique uma situação em que você utilizou o poder hierárquico. Pergunte-se: dava para ter liderado em vez de apenas comandar?
+                </div>
+            </section>
+
+            <section id="cap3">
+                <h2 class="chapter-title"><span>3</span> Dinâmica de Grupos e Equipes de Alta Performance</h2>
+                <p>A simples união de pessoas em um departamento forma um grupo, mas não necessariamente uma equipe. Um <strong>grupo</strong> trabalha individualizado, focado na troca de informações. Já uma <strong>equipe</strong> gera sinergia positiva; o esforço coordenado faz com que o resultado seja maior do que a soma das partes.</p>
+                <p>O gestor deve ser capaz de identificar os laços internos (se são grupos de comando, de tarefas, interesses ou amizade) e orquestrá-los para que sirvam à missão da organização.</p>
+                <div class="insight-box">
+                    <strong> Os estágios de desenvolvimento de uma equipe (na prática):</strong><br>
+                    • <strong>Formação:</strong> tudo novo, pouca confiança → seu papel é direcionar e dar clareza.<br>
+                    • <strong>Conflitos:</strong> diferenças aparecem → seu papel é mediar sem tomar partido.<br>
+                    • <strong>Normatização:</strong> regras e confiança começam a surgir → você pode delegar mais.<br>
+                    • <strong>Performance:</strong> resultados fluem com autonomia → seu papel é proteger e reconhecer.<br>
+                    Reconhecer em qual fase sua equipe está ajuda a escolher a abordagem certa em cada momento.
+                </div>
+                <div class="reflection-prompt">
+                    <strong>🔍 E agora, na prática?</strong> Em que estágio sua equipe se encontra hoje? Qual será sua ação mais importante para ajudá-la a evoluir?
+                </div>
+            </section>
+
+            <section id="cap4">
+                <h2 class="chapter-title"><span>4</span> Estratégias de Motivação</h2>
+                <p>A motivação é um estado interno condicionado pela capacidade de satisfazer uma necessidade. O gestor atua como o facilitador que provê o ambiente adequado, baseando-se em teorias consagradas como a de Herzberg (Fatores Higiênicos e Motivacionais).</p>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr><th>Fatores Higiênicos (Evitam Insatisfação)</th><th>Fatores Motivacionais (Geram Engajamento)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Salário, benefícios e estabilidade</td><td>Reconhecimento público e privado</td></tr>
+                            <tr><td>Condições físicas do ambiente de trabalho</td><td>Delegação de responsabilidade e autonomia</td></tr>
+                            <tr><td>Relacionamento com a chefia e colegas</td><td>Oportunidade real de crescimento e desafios</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="insight-box">
+                    <strong> E quando os recursos são limitados?</strong><br>
+                    A motivação não depende exclusivamente de aumentos ou promoções. Você pode atuar nos fatores motivacionais mesmo com orçamento apertado:<br>
+                    • Reconhecimento público genuíno.<br>
+                    • Dar autonomia para escolher <em>como</em> fazer o trabalho.<br>
+                    • Conectar a tarefa a um propósito maior dentro da empresa.<br>
+                    • Criar pequenas oportunidades de aprendizado e desenvolvimento.
+                </div>
+                <div class="reflection-prompt">
+                    <strong>🔍 E agora, na prática?</strong> Escolha um membro da equipe e ofereça um reconhecimento específico e sincero nos próximos dias. Observe o efeito no engajamento.
+                </div>
+            </section>
+
+            <section id="cap5">
+                <h2 class="chapter-title"><span>5</span> Clima Organizacional e Gestão de Estresse</h2>
+                <p>Desde a Escola das Relações Humanas (Experiência de Hawthorne), sabemos que o clima interno dita o ritmo da produção. O estresse surge quando há desequilíbrio entre a exigência do cargo e a capacidade ou recurso do colaborador.</p>
+                <p>Para reduzir o estresse de maneira eficaz, a organização deve: promover boas condições de trabalho, alocar trabalhadores em funções adequadas ao seu perfil comportamental, e definir com clareza absoluta as atribuições de cada um (evitando o estresse por ambiguidade).</p>
+                <div class="insight-box">
+                    <strong> Ambiguidade de papéis: o maior gerador silencioso de estresse</strong><br>
+                    Um dos maiores geradores de estresse não é o volume de trabalho, mas a ambiguidade: quando o colaborador não tem clareza do que é esperado dele, ou recebe cobranças contraditórias. Como gestor, reduzir ambiguidade é uma das tarefas mais importantes e menos óbvias. Documentar responsabilidades, alinhar expectativas após cada reunião e garantir que as prioridades estejam explícitas são ações que valem mais do que parecem.
+                </div>
+                <div class="reflection-prompt">
+                    <strong>🔍 E agora, na prática?</strong> Revise as descrições de responsabilidades da sua equipe. Existe alguma área cinzenta que gera dúvidas? Alinhe isso com o time até o final da semana.
+                </div>
+            </section>
+
+            <section id="anexo1">
+                <h2 class="chapter-title"><span>A</span> Anexo A: Auditoria Operacional (Checklist)</h2>
+                <p>Utilize esta ferramenta interativa semanalmente para monitorar a saúde organizacional da sua equipe. Marque os itens conforme forem sendo garantidos na operação:</p>
+                <div class="insight-box" style="margin-top: 0;">
+                    <strong> Como usar:</strong> Esse checklist não é para ser usado como fiscalização, mas como um <strong>termômetro de gestão</strong>. Se dois ou mais itens estiverem marcados como <em>não realizados</em> por semanas seguidas, isso é um sinal amarelo: reserve 15 minutos para refletir sobre o que está desalinhado na sua rotina de liderança.
+                </div>
+                <div class="checklist-box">
+                    <label class="check-item"><input type="checkbox"> Existe clareza nas metas e os colaboradores sabem o que se espera deles.</label>
+                    <label class="check-item"><input type="checkbox"> O líder dedicou tempo para reuniões de feedback individual (1:1) recentemente.</label>
+                    <label class="check-item"><input type="checkbox"> A delegação de tarefas respeita o perfil técnico e comportamental de cada um.</label>
+                    <label class="check-item"><input type="checkbox"> Os conflitos são mediados com imparcialidade, focando no problema e não nas pessoas.</label>
+                    <label class="check-item"><input type="checkbox"> Há um sistema de recompensa (mesmo que moral/reconhecimento) claro para metas batidas.</label>
+                </div>
+            </section>
+
+            <section id="anexo2">
+                <h2 class="chapter-title"><span>B</span> Anexo B: Plano de Ação Estratégico</h2>
+                <p>Matriz de intervenção rápida para resolução de anomalias no clima e operação.</p>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>Anomalia / Gap Detectado</th><th>Plano de Ação (Gestor)</th><th>Resultado Esperado (KPI)</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Produtividade Individual Baixa</strong></td><td>Revisar perfil vs. cargo e alinhar expectativas através de feedbacks.</td><td>Aumento da eficiência e entrega no prazo.</td></tr>
+                            <tr><td><strong>Clima de Fofoca / Desconfiança</strong></td><td>Centralizar a comunicação oficial e aumentar a transparência de decisões. <br> <em>Dica prática:</em> Muitas vezes a fofoca não é maldade, mas falta de canal seguro para expressar preocupações. Combine com a equipe: “toda crítica ou preocupação pode ser trazida diretamente para mim, sem medo de represália” e cumpra isso na prática.</td><td>Redução de conflitos de relacionamento.</td></tr>
+                            <tr><td><strong>Alta Rotatividade (Turnover)</strong></td><td>Auditoria dos Fatores Higiênicos (salário, infraestrutura, liderança tóxica).</td><td>Retenção de talentos críticos.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Glossário rápido -->
+            <div class="glossary">
+                <h3>📖 Glossário rápido</h3>
+                <dl>
+                    <dt>Fatores Higiênicos</dt><dd>Condições de trabalho que evitam a insatisfação, mas não motivam por si só (ex.: salário, ambiente físico).</dd>
+                    <dt>Fatores Motivacionais</dt><dd>Elementos intrínsecos que geram engajamento e satisfação (ex.: reconhecimento, autonomia).</dd>
+                    <dt>Ambiguidade de Papéis</dt><dd>Falta de clareza sobre responsabilidades ou expectativas conflitantes, principal causa de estresse organizacional.</dd>
+                    <dt>Estágios de Equipe</dt><dd>Fases de desenvolvimento: Formação, Conflitos, Normatização e Performance (modelo Tuckman).</dd>
+                    <dt>Poder Legítimo</dt><dd>Autoridade formal conferida pelo cargo hierárquico.</dd>
+                </dl>
+            </div>
+
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-tagline">
+            Da estratégia à operação, conectando processos, pessoas e resultados.
+        </div>
+        <div class="footer-note">
+            🔁 Revise este manual a cada trimestre. Use o checklist semanalmente e o plano de ação sempre que perceber um desvio no clima ou resultados.
+        </div>
+        <a href="https://www.silvaniogois.com.br/" target="_blank" class="footer-link">Ir ao Site Oficial</a>
+        <div class="copyright">
+            © 2026 Silvanio Gois - Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <a href="#" class="back-to-top" id="backToTop" aria-label="Voltar ao topo">↑</a>
+
+    <script>
+        // Checklist interativo
+        const checkboxes = document.querySelectorAll('.check-item input[type="checkbox"]');
+        checkboxes.forEach(box => {
+            box.addEventListener('change', function() {
+                const label = this.parentElement;
+                if(this.checked) label.classList.add('completed');
+                else label.classList.remove('completed');
+            });
+        });
+
+        // ScrollSpy
+        const sections = document.querySelectorAll('section, .capa-manual');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) link.classList.add('active');
+            });
+        });
+
+        // Botão voltar ao topo
+        const backBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) backBtn.classList.add('show');
+            else backBtn.classList.remove('show');
+        });
+        backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
